@@ -5,7 +5,8 @@ import (
 	"fmt"
 	"os"
 	"github.com/jackc/pgx/v5"
-	"github.com/mohetti/smart-nutri/api"
+	"github.com/gin-gonic/gin"
+    "github.com/mohetti/smart-nutri/api/recipes"
 )
 
 func main() {
@@ -16,5 +17,7 @@ func main() {
 	}
 	defer conn.Close(context.Background())
 
-	api.Connect(conn)
+	router := gin.Default()
+	recipes.Routing(router, conn)
+    router.Run("localhost:8080")
 }
