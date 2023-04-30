@@ -2,8 +2,8 @@ package config
 
 import (
     "fmt"
-     "os"
-     "context"
+    "os"
+    "context"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
