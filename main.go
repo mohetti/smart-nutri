@@ -1,7 +1,6 @@
 package main
 
 import (
-    "context"
     "github.com/mohetti/smart-nutri/config"
     "github.com/mohetti/smart-nutri/api"
 )
@@ -9,6 +8,6 @@ import (
 func main() {
     config.DBInit()
     api.RouterInit()
-    defer config.DB.Close(context.Background())
+    defer config.DB.Close()
 
 }
