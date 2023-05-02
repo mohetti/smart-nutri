@@ -13,7 +13,7 @@ import (
 type recipe struct {
     Id int
     Name string
-    Food []models.Food
+    Foods []models.Food
 }
 
 func Recipes(c *gin.Context) {
@@ -95,7 +95,7 @@ func Recipes(c *gin.Context) {
    foodsSlice = append(foodsSlice, food)
    }
 
-   r.Food = foodsSlice
+   r.Foods = foodsSlice
 
    c.IndentedJSON(http.StatusOK, r)
 }
