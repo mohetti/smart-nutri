@@ -12,5 +12,5 @@ func RouterInit() {
 }
 
 func routes(router *gin.Engine) {
-    router.GET("/recipes", controllers.Recipes)
+    router.GET("/recipes/:id", controllers.Recipes)
 }

@@ -7,72 +7,19 @@ import (
     "net/http"
     "github.com/gin-gonic/gin"
     "github.com/mohetti/smart-nutri/config"
+    "github.com/mohetti/smart-nutri/api/models"
 )
-
-type dbFood struct {
-    Id int
-    Food_id int
-    Recipe_id int
-    Name string
-    Synonyms string
-    Category string
-    Density string
-    Reference_unit string
-    Kilojoule int
-    Kilocalories int
-    Fat_g float32
-    Saturated_fats_g string
-    Monounsaturated_fats_g string
-    Polyunsaturated_fats_g string
-    Cholesterol_mg string
-    Carbohydrates_g int
-    Sugar_g string
-    Starch_g string
-    Dietary_fiber_g float32
-    Protein_g float32
-    Salt_nacl_g float32
-    Alcohol_g string
-    Water_g float32
-    Vitamin_a_activity_re_mug_re string
-    Vitamin_a_activity_rae_mug_re string
-    Retinol_mug string
-    Betacarotin_activity_mug_bce string
-    Betacarotin_mug string
-    Vitamin_b1_mg string
-    Vitamin_b2_mg string
-    Vitamin_b6_mg string
-    Vitamin_b12_mug string
-    Niacin_mg string
-    Folat_mug string
-    Vitamin_c_mg string
-    Vitamin_d_mug string
-    Vitamin_e_activity_mg_ate string
-    Kalium_mg int
-    Natrium_mg int
-    Chlorid_mg string
-    Calcium_mg int
-    Magnesium_mg int
-    Phosphor_mg int
-    Iron_mg float32
-    Iodine_mug string
-    Zinc_mg float32
-    Selenium_mug string
-    FoodId int
-}
-
-type food struct {
-    Name string
-}
 
 type recipe struct {
     Id int
     Name string
-    Food []dbFood
+    Food []models.Food
 }
 
 func Recipes(c *gin.Context) {
+   id := c.Param("id")
    r := recipe{}
-   var err = config.DB.QueryRow(context.Background(), "select id, name from recipes where id=$1", 2).Scan(&r.Id, &r.Name)
+   var err = config.DB.QueryRow(context.Background(), "select id, name from recipes where id=$1", id).Scan(&r.Id, &r.Name)
    if err != nil {
        fmt.Fprintf(os.Stderr, "QueryRow failed: %v\n", err)
        os.Exit(1)
@@ -84,8 +31,8 @@ func Recipes(c *gin.Context) {
    sugar_g, starch_g, dietary_fiber_g, protein_g, salt_nacl_g, alcohol_g, water_g, vitamin_a_activity_re_mug_re,
    vitamin_a_activity_rae_mug_re, retinol_mug, betacarotin_activity_mug_bce, betacarotin_mug, vitamin_b1_mg,
    vitamin_b2_mg, vitamin_b6_mg, vitamin_b12_mug, niacin_mg, folat_mug, vitamin_c_mg, vitamin_d_mug, vitamin_e_activity_mg_ate,
-   kalium_mg, natrium_mg, chlorid_mg, calcium_mg, magnesium_mg, phosphor_mg, iron_mg, iodine_mug, zinc_mg, selenium_mug, foods.id
-   from recipes_foods left join foods on recipes_foods.food_id = foods.id where recipes_foods.recipe_id=2`)
+   kalium_mg, natrium_mg, chlorid_mg, calcium_mg, magnesium_mg, phosphor_mg, iron_mg, iodine_mug, zinc_mg, selenium_mug
+   from recipes_foods left join foods on recipes_foods.food_id = foods.id where recipes_foods.recipe_id=$1`, id)
    if err2 != nil {
           fmt.Fprintf(os.Stderr, "Query failed: %v\n", err2)
           os.Exit(1)
@@ -93,10 +40,10 @@ func Recipes(c *gin.Context) {
 
    defer foods.Close()
 
-   var foodsSlice []dbFood
+   var foodsSlice []models.Food
 
    for foods.Next() {
-   var food dbFood
+   var food models.Food
    foods.Scan(
                  &food.Id,
                  &food.Food_id,
@@ -144,8 +91,7 @@ func Recipes(c *gin.Context) {
                        &food.Iron_mg,
                        &food.Iodine_mug,
                        &food.Zinc_mg,
-                       &food.Selenium_mug,
-                       &food.FoodId)
+                       &food.Selenium_mug)
    foodsSlice = append(foodsSlice, food)
    }
 
