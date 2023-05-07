@@ -27,6 +27,9 @@ func Recipes(c *gin.Context) {
    }
 
    var food = models.Food{}
+// TODO: prevent sql injection on id
+// TODO: format code
+// TODO: implement repository pattern and clean up naming / file names and locations
 
    var foods, err2 = config.DB.Query(context.Background(), fmt.Sprintf(`select recipes_foods.id,
    %s
