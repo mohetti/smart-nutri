@@ -5,6 +5,8 @@ go 1.20
 require (
 	github.com/gin-gonic/gin v1.9.0
 	github.com/jackc/pgx/v5 v5.3.1
+	github.com/jmoiron/sqlx v1.3.5
+	github.com/lib/pq v1.2.0
 )
 
 require (

@@ -7,10 +7,6 @@ import (
 
 func RouterInit() {
     router := gin.Default()
-    routes(router)
+    router.GET("/recipes/:id", controllers.GetRecipe)
     router.Run("localhost:8080")
-}
-
-func routes(router *gin.Engine) {
-    router.GET("/recipes/:id", controllers.Recipes)
 }

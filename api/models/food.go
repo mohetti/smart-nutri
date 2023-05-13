@@ -1,9 +1,6 @@
 package models
 
 type Food struct {
-    Id int
-    Food_id int
-    Recipe_id int
     Name string
     Synonyms string
     Category string
@@ -48,4 +45,5 @@ type Food struct {
     Iodine_mug string
     Zinc_mg float32
     Selenium_mug string
+    Id int
 }
