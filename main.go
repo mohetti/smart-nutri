@@ -1,12 +1,13 @@
 package main
 
 import (
-    "github.com/mohetti/smart-nutri/config"
     "github.com/mohetti/smart-nutri/api"
+    "github.com/mohetti/smart-nutri/db"
+
 )
 
 func main() {
-    config.DBInit()
-    api.RouterInit()
-    defer config.DB.Close()
+    postgres := db.DBInit()
+    api.RouterInit(postgres)
+    defer postgres.DB.Close()
 }

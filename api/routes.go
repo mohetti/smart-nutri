@@ -2,11 +2,15 @@ package api
 
 import (
     "github.com/gin-gonic/gin"
-    "github.com/mohetti/smart-nutri/api/controllers"
+    "github.com/mohetti/smart-nutri/db"
+
 )
 
-func RouterInit() {
+var RouteConn  *db.Postgres
+
+func RouterInit(postgres *db.Postgres) {
     router := gin.Default()
-    router.GET("/recipes/:id", controllers.GetRecipe)
+    RouteConn = postgres
+    router.GET("/recipes/:id", GetRecipe)
     router.Run("localhost:8080")
 }
