@@ -6,11 +6,11 @@ import (
 
 )
 
-var routeConn db.Actions
+var dbActions db.Actions
 
-func RouterInit(dbActions db.Actions) {
+func RouterInit(p db.Actions) {
     router := gin.Default()
-    routeConn = dbActions
+    dbActions = p
     router.GET("/recipes/:id", getRecipe)
     router.Run("localhost:8080")
 }

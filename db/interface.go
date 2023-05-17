@@ -1,7 +1,6 @@
 package db
 
 import (
-    "github.com/mohetti/smart-nutri/types"
      "github.com/mohetti/smart-nutri/api/models"
 )
 
@@ -10,6 +9,6 @@ import (
 type Actions interface {
     OpenConnection() Actions
     CloseConnection()
-    GetRecipe(id string, recipe *types.Recipe)
+    GetRecipe(id string, recipe *models.Recipe)
     GetFoods(id string, foods *[]models.Food)
 }

@@ -6,7 +6,6 @@ import (
     _ "github.com/lib/pq"
 	"github.com/jmoiron/sqlx"
 	"github.com/mohetti/smart-nutri/api/models"
-    "github.com/mohetti/smart-nutri/types"
 )
 
 type db struct {
@@ -29,7 +28,7 @@ func (p db) CloseConnection() {
     Postgres.DB.Close()
 }
 
-func (p db) GetRecipe(id string, recipe *types.Recipe) {
+func (p db) GetRecipe(id string, recipe *models.Recipe) {
     if recipeErr := p.DB.Get(recipe, "select id, name from recipes where id=$1", id); recipeErr != nil {
        fmt.Fprintf(os.Stderr, "QueryRow failed: %v\n", recipeErr)
        os.Exit(1)
