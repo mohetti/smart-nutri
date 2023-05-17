@@ -8,7 +8,7 @@ import (
 
 var dbActions db.Actions
 
-func RouterInit(p db.Actions) {
+func InitRoutes(p db.Actions) {
     router := gin.Default()
     dbActions = p
     router.GET("/recipes/:id", getRecipe)

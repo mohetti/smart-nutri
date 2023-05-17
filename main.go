@@ -8,6 +8,6 @@ import (
 
 func main() {
     postgres := db.Postgres.OpenConnection()
-    api.RouterInit(postgres)
+    api.InitRoutes(postgres)
     defer postgres.CloseConnection()
 }
