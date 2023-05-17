@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-    postgres := db.DBInit()
+    postgres := db.Postgres.OpenConnection()
     api.RouterInit(postgres)
-    defer postgres.DB.Close()
+    defer postgres.CloseConnection()
 }

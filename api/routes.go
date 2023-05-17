@@ -6,11 +6,11 @@ import (
 
 )
 
-var RouteConn  *db.Postgres
+var routeConn db.Actions
 
-func RouterInit(postgres *db.Postgres) {
+func RouterInit(dbActions db.Actions) {
     router := gin.Default()
-    RouteConn = postgres
-    router.GET("/recipes/:id", GetRecipe)
+    routeConn = dbActions
+    router.GET("/recipes/:id", getRecipe)
     router.Run("localhost:8080")
 }
